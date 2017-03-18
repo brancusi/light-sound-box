@@ -8,8 +8,6 @@ WORKDIR $APP_BASE
 RUN apt-get update && apt-get install -y \
   alsa-utils \
   libasound2-dev \
-  festival \
-  festvox-kallpc16k\
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY package.json $APP_BASE/
