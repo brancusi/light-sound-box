@@ -9,6 +9,8 @@ WORKDIR $APP_BASE
 # Run npm install here to cache this later for future builds
 COPY package.json $APP_BASE/
 
+RUN npm install
+
 # Copy over app source
 COPY . $APP_BASE
 
