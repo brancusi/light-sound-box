@@ -11,4 +11,4 @@ RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm
 
 COPY . $APP_BASE
 
-CMD [ "node", "$APP_BASE/index.js" ]
+CMD [ "node", "index.js" ]
