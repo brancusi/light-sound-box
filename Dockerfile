@@ -9,7 +9,7 @@ WORKDIR $APP_BASE
 # Run npm install here to cache this later for future builds
 COPY package.json $APP_BASE/
 
-RUN npm install
+RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm
 
 # Copy over app source
 COPY . $APP_BASE
