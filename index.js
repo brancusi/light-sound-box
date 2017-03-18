@@ -1,8 +1,22 @@
-var fs = require('fs');
-var lame = require('../');
-var Speaker = require('speaker');
+var player = require('play-sound')(opts = {})
 
-fs.createReadStream("foo1.mp3")
-  .pipe(new lame.Decoder)
-  .on('format', console.log)
-  .pipe(new Speaker);
+// $ mplayer foo.mp3
+player.play('foo1.mp3', function(err){
+  if (err) throw err
+})
+
+// { timeout: 300 } will be passed to child process
+// var audio = player.play('foo.mp3', { timeout: 300 }, function(err){
+//   if (err) throw err
+// })
+
+// configure arguments for executable if any
+// player.play('foo.mp3', { afplay: ['-v', 1 ] /* lower volume for afplay on OSX */ }, function(err){
+//   if (err) throw err
+// })
+
+// access the node child_process in case you need to kill it on demand
+// var audio = player.play('foo.mp3', function(err){
+//   if (err && !err.killed) throw err
+// })
+// audio.kill()
