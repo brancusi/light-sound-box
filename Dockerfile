@@ -6,7 +6,6 @@ WORKDIR $APP_BASE
 
 # Install image tools
 RUN apt-get update && apt-get install -y \
-  pulseaudio \
   alsa-utils \
   libasound2-dev \
   festival \
@@ -18,5 +17,3 @@ COPY package.json $APP_BASE/
 RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm
 
 COPY . $APP_BASE
-
-CMD [ "node", "index.js" ]
