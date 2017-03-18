@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "play-sound": "^1.1.1"
+    "lame": "^1.2.4",
+    "speaker": "^0.3.0"
   }
 }
