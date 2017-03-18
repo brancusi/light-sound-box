@@ -8,7 +8,6 @@ WORKDIR $APP_BASE
 RUN apt-get update && apt-get install -y \
   alsa-utils \
   libasound2-dev \
-  mpg321 \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY package.json $APP_BASE/
