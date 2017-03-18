@@ -1,5 +1,5 @@
 # Getting from this base so we can override some of the build steps
-FROM resin/raspberrypi2-node:onbuild
+FROM resin/raspberrypi2-node:0.12.11
 
 # Setup base app dir
 ENV APP_BASE /usr/src/app
