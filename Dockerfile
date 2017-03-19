@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
   mpg321 \
   bluetooth \
   bluez \
+  bluez-firmware \
   libbluetooth-dev \
   libudev-dev \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
