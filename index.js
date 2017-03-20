@@ -1,5 +1,5 @@
 var player = require('play-sound')(opts = {})
-
+var exec = require('child_process').exec;
 var util = require('util');
 
 var bleno = require('bleno');
@@ -9,6 +9,10 @@ var BlenoCharacteristic = bleno.Characteristic;
 var BlenoDescriptor = bleno.Descriptor;
 
 console.log("What up");
+
+exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -");
+exec("hciconfig hci0 up");
+
 
 var WriteOnlyCharacteristic = function() {
   WriteOnlyCharacteristic.super_.call(this, {
