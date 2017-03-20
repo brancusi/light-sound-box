@@ -8,18 +8,6 @@ var BlenoPrimaryService = bleno.PrimaryService;
 var BlenoCharacteristic = bleno.Characteristic;
 var BlenoDescriptor = bleno.Descriptor;
 
-console.log("What up");
-
-exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, stdout){
-  console.log(err);
-  console.log(stdout);
-
-  exec("hciconfig hci0 up", function(err1, stdout1){
-    console.log(err1);
-    console.log(stdout1);
-  });
-});
-
 var WriteOnlyCharacteristic = function() {
   WriteOnlyCharacteristic.super_.call(this, {
     uuid: 'fffffffffffffffffffffffffffffff4',
@@ -47,8 +35,6 @@ function SampleService() {
     ]
   });
 }
-
-util.inherits(SampleService, BlenoPrimaryService);
 
 bleno.on('stateChange', function(state) {
   console.log('on -> stateChange: ' + state + ', address = ' + bleno.address);
@@ -114,3 +100,15 @@ bleno.on('servicesSet', function(error) {
 //   if (err && !err.killed) throw err
 // })
 // audio.kill()
+
+exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, stdout){
+  console.log(err);
+  console.log(stdout);
+
+  exec("hciconfig hci0 up", function(err1, stdout1){
+    console.log(err1);
+    console.log(stdout1);
+
+    util.inherits(SampleService, BlenoPrimaryService);
+  });
+});
