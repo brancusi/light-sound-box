@@ -16,6 +16,8 @@ RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm
 
 ENV INITSYSTEM on
 
+RUN /startbluetooth.sh
+
 COPY . $APP_BASE
 
 CMD [ "node", "index.js" ]
