@@ -21,6 +21,6 @@ COPY . $APP_BASE
 COPY startbluetooth.sh $APP_BASE/
 
 RUN chmod +x startbluetooth.sh
-RUN startbluetooth.sh
+RUN bash -c "startbluetooth.sh"
 
 CMD [ "node", "index.js" ]
