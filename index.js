@@ -36,15 +36,7 @@ function SampleService() {
   });
 }
 
-bleno.on('stateChange', function(state) {
-  console.log('on -> stateChange: ' + state + ', address = ' + bleno.address);
-
-  if (state === 'poweredOn') {
-    bleno.startAdvertising('test', ['fffffffffffffffffffffffffffffff0']);
-  } else {
-    bleno.stopAdvertising();
-  }
-});
+util.inherits(SampleService, BlenoPrimaryService);
 
 // Linux only events /////////////////
 bleno.on('accept', function(clientAddress) {
@@ -109,6 +101,14 @@ exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, st
     console.log(err1);
     console.log(stdout1);
 
-    util.inherits(SampleService, BlenoPrimaryService);
+    bleno.on('stateChange', function(state) {
+      console.log('on -> stateChange: ' + state + ', address = ' + bleno.address);
+
+      if (state === 'poweredOn') {
+        bleno.startAdvertising('test', ['fffffffffffffffffffffffffffffff0']);
+      } else {
+        bleno.stopAdvertising();
+      }
+    });
   });
 });
