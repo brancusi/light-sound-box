@@ -1,4 +1,4 @@
-FROM resin/raspberry-pi2-node:7.6.0
+FROM resin/raspberrypi3-node:slim
 
 ENV APP_BASE /usr/src/app
 RUN mkdir -p $APP_BASE
