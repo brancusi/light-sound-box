@@ -18,7 +18,9 @@ ENV INITSYSTEM on
 
 COPY . $APP_BASE
 
-RUN chmod +x $APP_BASE/startbluetooth.sh
-RUN $APP_BASE/startbluetooth.sh
+COPY startbluetooth.sh $APP_BASE/
+
+RUN chmod +x startbluetooth.sh
+RUN startbluetooth.sh
 
 CMD [ "node", "index.js" ]
