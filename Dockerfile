@@ -1,4 +1,4 @@
-FROM resin/raspberrypi3-node:slim
+FROM resin/raspberrypi3-node
 
 ENV APP_BASE /usr/src/app
 RUN mkdir -p $APP_BASE
@@ -6,10 +6,8 @@ WORKDIR $APP_BASE
 
 # Install image tools
 RUN apt-get update && apt-get install -y \
-  build-essential \
-  bluez bluez-tools \
+  bluez bluez-firmware \
   alsa-utils libasound2-dev mpg321 \
-  libglib2.0-dev libboost-thread-dev libbluetooth-dev \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY package.json $APP_BASE/
