@@ -14,6 +14,8 @@ COPY package.json $APP_BASE/
 
 RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm
 
+ENV INITSYSTEM on
+
 COPY . $APP_BASE
 
 CMD [ "node", "index.js" ]
