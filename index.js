@@ -7,33 +7,6 @@ var BlenoPrimaryService = bleno.PrimaryService;
 
 var EchoCharacteristic = require('./char');
 
-console.log('bleno - echo');
-
-bleno.on('stateChange', function(state) {
-  console.log('on -> stateChange: ' + state);
-
-  if (state === 'poweredOn') {
-    bleno.startAdvertising('echo', ['ec00']);
-  } else {
-    bleno.stopAdvertising();
-  }
-});
-
-bleno.on('advertisingStart', function(error) {
-  console.log('on -> advertisingStart: ' + (error ? 'error ' + error : 'success'));
-
-  if (!error) {
-    bleno.setServices([
-      new BlenoPrimaryService({
-        uuid: 'ec00',
-        characteristics: [
-          new EchoCharacteristic()
-        ]
-      })
-    ]);
-  }
-});
-
 
 
 // { timeout: 300 } will be passed to child process
@@ -60,54 +33,16 @@ exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, st
     console.log(err1);
     console.log(stdout1);
 
-    var WriteOnlyCharacteristic = function() {
-      WriteOnlyCharacteristic.super_.call(this, {
-        uuid: 'fffffffffffffffffffffffffffffff4',
-        properties: ['write', 'writeWithoutResponse']
-      });
-    };
+    console.log('bleno - echo');
 
-    util.inherits(WriteOnlyCharacteristic, BlenoCharacteristic);
+    bleno.on('stateChange', function(state) {
+      console.log('on -> stateChange: ' + state);
 
-    WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {
-      console.log('WriteOnlyCharacteristic write request: ' + data.toString('hex') + ' ' + offset + ' ' + withoutResponse);
-
-      player.play('foo1.mp3', function(err){
-        if (err) throw err
-      })
-
-      callback(this.RESULT_SUCCESS);
-    };
-
-    function SampleService() {
-      SampleService.super_.call(this, {
-        uuid: 'fffffffffffffffffffffffffffffff0',
-        characteristics: [
-          new WriteOnlyCharacteristic()
-        ]
-      });
-    }
-
-    util.inherits(SampleService, BlenoPrimaryService);
-
-    // Linux only events /////////////////
-    bleno.on('accept', function(clientAddress) {
-      console.log('on -> accept, client: ' + clientAddress);
-
-      bleno.updateRssi();
-    });
-
-    bleno.on('disconnect', function(clientAddress) {
-      console.log('on -> disconnect, client: ' + clientAddress);
-    });
-
-    bleno.on('rssiUpdate', function(rssi) {
-      console.log('on -> rssiUpdate: ' + rssi);
-    });
-    //////////////////////////////////////
-
-    bleno.on('mtuChange', function(mtu) {
-      console.log('on -> mtuChange: ' + mtu);
+      if (state === 'poweredOn') {
+        bleno.startAdvertising('echo', ['ec00']);
+      } else {
+        bleno.stopAdvertising();
+      }
     });
 
     bleno.on('advertisingStart', function(error) {
@@ -115,27 +50,17 @@ exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, st
 
       if (!error) {
         bleno.setServices([
-          new SampleService()
+          new BlenoPrimaryService({
+            uuid: 'ec00',
+            characteristics: [
+              new EchoCharacteristic()
+            ]
+          })
         ]);
       }
     });
 
-    bleno.on('advertisingStop', function() {
-      console.log('on -> advertisingStop');
-    });
+    
 
-    bleno.on('servicesSet', function(error) {
-      console.log('on -> servicesSet: ' + (error ? 'error ' + error : 'success'));
-    });
-
-    bleno.on('stateChange', function(state) {
-      console.log('on -> stateChange: ' + state + ', address = ' + bleno.address);
-
-      if (state === 'poweredOn') {
-        bleno.startAdvertising('test', ['fffffffffffffffffffffffffffffff0']);
-      } else {
-        bleno.stopAdvertising();
-      }
-    });
   });
 });
