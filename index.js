@@ -16,7 +16,7 @@ function startBluetooth() {
 
 function startRadio() {
   console.log("Starting Radio");
-  exec("hciconfig hci0 up", function(err1, stdout1){
+  exec("hciconfig hci0 up", function(err, stdout1){
     if(err) {
       console.log("Error starting radio");
       startRadio();
