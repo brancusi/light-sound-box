@@ -127,3 +127,5 @@ function startApp() {
 //
 //   });
 // });
+
+startBluetooth();
