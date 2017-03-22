@@ -1,6 +1,6 @@
 var player = require('play-sound')(opts = {})
 var exec = require('child_process').exec;
-
+var util = require('util');
 
 // { timeout: 300 } will be passed to child process
 // var audio = player.play('foo.mp3', { timeout: 300 }, function(err){
