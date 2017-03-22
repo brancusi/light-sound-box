@@ -11,7 +11,7 @@ function startBluetooth() {
     } else {
       startRadio();
     }
-  }
+  });
 }
 
 function startRadio() {
@@ -23,7 +23,7 @@ function startRadio() {
     } else {
       startApp();
     }
-  }
+  });
 }
 
 function startApp() {
