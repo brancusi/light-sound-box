@@ -20,11 +20,11 @@ var exec = require('child_process').exec;
 // audio.kill()
 
 exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, stdout){
-  console.log(err);
+  console.log("Error on the outer", err);
   console.log(stdout);
 
   exec("hciconfig hci0 up", function(err1, stdout1){
-    console.log(err1);
+    console.log("Error inner !!!!", err1);
     console.log(stdout1);
 
     console.log('bleno - echo');
@@ -59,8 +59,5 @@ exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, st
         ]);
       }
     });
-
-
-
   });
 });
