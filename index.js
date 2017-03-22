@@ -1,12 +1,6 @@
 var player = require('play-sound')(opts = {})
 var exec = require('child_process').exec;
 
-var bleno = require('bleno');
-
-var BlenoPrimaryService = bleno.PrimaryService;
-
-var EchoCharacteristic = require('./char');
-
 
 
 // { timeout: 300 } will be passed to child process
@@ -35,6 +29,12 @@ exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, st
 
     console.log('bleno - echo');
 
+    var bleno = require('bleno');
+
+    var BlenoPrimaryService = bleno.PrimaryService;
+
+    var EchoCharacteristic = require('./char');
+
     bleno.on('stateChange', function(state) {
       console.log('on -> stateChange: ' + state);
 
@@ -60,7 +60,7 @@ exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, st
       }
     });
 
-    
+
 
   });
 });
