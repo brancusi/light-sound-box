@@ -52,7 +52,7 @@ function startApp() {
       player.play();
     } else if (data.toString('hex') === "0000") {
       console.log("Stop sound");
-      player.stop();
+      player.pause();
     }
 
     callback(this.RESULT_SUCCESS);
