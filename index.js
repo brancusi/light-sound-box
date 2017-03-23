@@ -48,8 +48,10 @@ function startApp() {
     console.log('WriteOnlyCharacteristic write request: ' + data.toString('hex') + ' ' + offset + ' ' + withoutResponse);
 
     if(data.toString('hex') === "0001") {
+      console.log("Play sound");
       player.play();
     } else if (data.toString('hex') === "0000") {
+      console.log("Stop sound");
       player.stop();
     }
 
