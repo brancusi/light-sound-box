@@ -2,6 +2,9 @@ var Player = require('player');
 var player = new Player('./foo1.mp3');
 var exec = require('child_process').exec;
 var util = require('util');
+var GPIO = require('pi-pins');
+
+var pin = GPIO.connect(21);
 
 function startBluetooth() {
   console.log("Starting bluetooth");
@@ -50,9 +53,11 @@ function startApp() {
     if(data.toString('hex') === "0001") {
       console.log("Play sound");
       player.play();
+      pin.mode('high');
     } else if (data.toString('hex') === "0000") {
       console.log("Stop sound");
       player.pause();
+      pin.mode('low');
     }
 
     callback(this.RESULT_SUCCESS);
