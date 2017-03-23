@@ -1,4 +1,5 @@
-var player = require('play-sound')(opts = {})
+var Player = require('player');
+var player = new Player('./foo1.mp3');
 var exec = require('child_process').exec;
 var util = require('util');
 
@@ -46,9 +47,11 @@ function startApp() {
   WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {
     console.log('WriteOnlyCharacteristic write request: ' + data.toString('hex') + ' ' + offset + ' ' + withoutResponse);
 
-    player.play('foo1.mp3', function(err){
-      if (err) throw err
-    })
+    if(data.toString('hex') === "0001") {
+      player.play();
+    } else if (data.toString('hex') === "0000") {
+      player.stop();
+    }
 
     callback(this.RESULT_SUCCESS);
   };
