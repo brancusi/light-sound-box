@@ -71,21 +71,33 @@ function startApp() {
     console.log('WriteOnlyCharacteristic write request: ' + data.toString('hex') + ' ' + offset + ' ' + withoutResponse);
 
     if(data.toString('hex') === "0001") {
-      console.log("Play sound");
 
-      playback = spawn('mpg123', ["--loop", 10, MY_SOUND]);
-
-      pin.mode('high');
     } else if (data.toString('hex') === "0000") {
-      console.log("Stop sound");
-
-      playback.kill();
-
-      pin.mode('low');
+      killPlayback();
     }
 
     callback(this.RESULT_SUCCESS);
   };
+
+  function startPlayback() {
+    if(playback === undefined) {
+      playback = spawn('mpg123', ["--loop", 10, MY_SOUND]);
+    } else {
+      killPlayback();
+      playback = spawn('mpg123', ["--loop", 10, MY_SOUND]);
+    }
+
+    pin.mode('high');
+  }
+
+  function killPlayback() {
+    pin.mode('low');
+    if(playback) {
+      playback.kill();
+    }
+
+    playback = undefined;
+  }
 
   function MainService() {
     MainService.super_.call(this, {
