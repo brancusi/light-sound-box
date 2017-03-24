@@ -4,12 +4,17 @@ var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
 var util = require('util');
 var GPIO = require('pi-pins');
+var Rx = require('rxjs/Rx');
 
 var pin = GPIO.connect(21);
 
 let playback = undefined;
 
 const DEVICE_ID = process.env.DEVICE_ID;
+
+const SOUND_MAP = {"fff0": "sounds1.mp3"}
+
+const MY_SOUND = SOUND_MAP[DEVICE_ID];
 
 function startup() {
   exec("amixer -- sset PCM,0 -0.77dB");
@@ -41,6 +46,11 @@ function startRadio() {
 }
 
 function startApp() {
+  Rx.Observable
+        .interval(10000)
+        .startWith(0)
+        .subscribe(jsKeys => exec("mpg123 blank.mp3"));
+
   console.log("Started App");
   var bleno = require('bleno');
 
@@ -63,7 +73,7 @@ function startApp() {
     if(data.toString('hex') === "0001") {
       console.log("Play sound");
 
-      playback = spawn('mpg123', ['sound1.mp3']);
+      playback = spawn('mpg123', ["--loop", 10, MY_SOUND]);
 
       pin.mode('high');
     } else if (data.toString('hex') === "0000") {
