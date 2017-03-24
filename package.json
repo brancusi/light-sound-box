@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bleno": "^0.4.2",
+    "dotenv": "^4.0.0",
     "pi-pins": "^1.0.2"
   }
 }

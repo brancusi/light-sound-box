@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
 var util = require('util');
@@ -6,6 +8,8 @@ var GPIO = require('pi-pins');
 var pin = GPIO.connect(21);
 
 let playback = undefined;
+
+const DEVICE_ID = process.env.DEVICE_ID;
 
 function startup() {
   exec("amixer -- sset PCM,0 -0.77dB");
@@ -46,7 +50,7 @@ function startApp() {
 
   var WriteOnlyCharacteristic = function() {
     WriteOnlyCharacteristic.super_.call(this, {
-      uuid: 'fffffffffffffffffffffffffffffff4',
+      uuid: 'fff1',
       properties: ['write', 'writeWithoutResponse']
     });
   };
@@ -59,7 +63,7 @@ function startApp() {
     if(data.toString('hex') === "0001") {
       console.log("Play sound");
 
-      playback = spawn('mpg123', ['foo1.mp3']);
+      playback = spawn('mpg123', ['sound1.mp3']);
 
       pin.mode('high');
     } else if (data.toString('hex') === "0000") {
@@ -75,7 +79,7 @@ function startApp() {
 
   function MainService() {
     MainService.super_.call(this, {
-      uuid: 'fffffffffffffffffffffffffffffff0',
+      uuid: DEVICE_ID,
       characteristics: [
         new WriteOnlyCharacteristic()
       ]
@@ -88,7 +92,7 @@ function startApp() {
     console.log('on -> stateChange: ' + state + ', address = ' + bleno.address);
 
     if (state === 'poweredOn') {
-      bleno.startAdvertising('Light Sound', ['fffffffffffffffffffffffffffffff0']);
+      bleno.startAdvertising('Light Sound', [DEVICE_ID]);
     } else {
       bleno.stopAdvertising();
     }
@@ -132,20 +136,5 @@ function startApp() {
     console.log('on -> servicesSet: ' + (error ? 'error ' + error : 'success'));
   });
 }
-//
-// exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, stdout){
-//   console.log("Error on the outer", err);
-//   console.log(stdout);
-//
-//   exec("hciconfig hci0 up", function(err1, stdout1){
-//     console.log("Error inner !!!!", err1);
-//     console.log(stdout1);
-//
-//     console.log('bleno - echo');
-//
-//
-//
-//   });
-// });
 
 startup();
