@@ -90,7 +90,7 @@ function startApp() {
     const index = (Math.floor(Math.random() * 2) + 1) - 1;
     const song = ["sound1.mp3", "sound2.mp3"][index];
 
-    playback = spawn('mpg123', ["--loop", 10, song]);
+    playback = spawn('mpg123', ["--loop", 2, song]);
 
     pin.mode('high');
   }
