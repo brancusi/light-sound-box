@@ -1,10 +1,11 @@
-var Player = require('player');
-var player = new Player('./foo1.mp3');
+var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
 var util = require('util');
 var GPIO = require('pi-pins');
 
 var pin = GPIO.connect(21);
+
+let playback = undefined;
 
 function startBluetooth() {
   console.log("Starting bluetooth");
@@ -52,11 +53,15 @@ function startApp() {
 
     if(data.toString('hex') === "0001") {
       console.log("Play sound");
-      player.play();
+
+      playback = spawn('mpg123', ['foo1.mp3']);
+
       pin.mode('high');
     } else if (data.toString('hex') === "0000") {
       console.log("Stop sound");
-      player.pause();
+
+      playback.kill();
+
       pin.mode('low');
     }
 
