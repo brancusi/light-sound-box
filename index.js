@@ -71,7 +71,7 @@ function startApp() {
     console.log('WriteOnlyCharacteristic write request: ' + data.toString('hex') + ' ' + offset + ' ' + withoutResponse);
 
     if(data.toString('hex') === "0001") {
-
+      startPlayback();
     } else if (data.toString('hex') === "0000") {
       killPlayback();
     }
