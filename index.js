@@ -68,13 +68,11 @@ function startApp() {
   util.inherits(WriteOnlyCharacteristic, BlenoCharacteristic);
 
   WriteOnlyCharacteristic.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {
-    console.log(data, data.toString());
-
-    switch (data.toString('hex')) {
-      case "0001":
+    switch (data.toString()) {
+      case "1":
         startPlayback();
         break;
-      case "0000":
+      case "0":
         killPlayback();
         break;
       default:
