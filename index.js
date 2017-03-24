@@ -7,6 +7,11 @@ var pin = GPIO.connect(21);
 
 let playback = undefined;
 
+function startup() {
+  exec("amixer -- sset PCM,0 -0.77dB");
+  startBluetooth();
+}
+
 function startBluetooth() {
   console.log("Starting bluetooth");
   exec("/usr/bin/hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -", function(err, stdout){
@@ -143,4 +148,4 @@ function startApp() {
 //   });
 // });
 
-startBluetooth();
+startup();

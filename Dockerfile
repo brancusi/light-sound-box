@@ -16,8 +16,6 @@ RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm
 
 ENV INITSYSTEM on
 
-RUN amixer -- sset PCM,0 -0.77dB
-
 COPY . $APP_BASE
 
 CMD [ "node", "index.js" ]
