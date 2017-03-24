@@ -12,7 +12,7 @@ let playback = undefined;
 
 const DEVICE_ID = process.env.DEVICE_ID;
 
-const SOUND_MAP = {"fff0": "sounds1.mp3"}
+const SOUND_MAP = {"fff0": "sound1.mp3"}
 
 const MY_SOUND = SOUND_MAP[DEVICE_ID];
 
