@@ -12,7 +12,7 @@ let playback = undefined;
 
 const DEVICE_ID = process.env.DEVICE_ID;
 
-const SOUND_MAP = {"fff0": "sound1.mp3", "fff1": "sound2.mp3"}
+const SOUND_MAP = {"fff0": "sound1.mp3", "fff1": "sound2.mp3", , "fff2": "sound3.mp3"}
 
 const MY_SOUND = SOUND_MAP[DEVICE_ID];
 
@@ -87,10 +87,14 @@ function startApp() {
       killPlayback();
     }
 
-    const index = (Math.floor(Math.random() * 2) + 1) - 1;
-    const song = ["sound1.mp3", "sound2.mp3"][index];
+    // For testing
+    const index = (Math.floor(Math.random() * 3) + 1) - 1;
+    const song = ["sound1.mp3", "sound2.mp3", "sound3.mp3"][index];
 
     playback = spawn('mpg123', ["--loop", 2, song]);
+
+    // For production
+    playback = spawn('mpg123', ["--loop", 2, MY_SOUND]);
 
     pin.mode('high');
   }
