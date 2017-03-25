@@ -88,13 +88,13 @@ function startApp() {
     }
 
     // For testing
-    const index = (Math.floor(Math.random() * 3) + 1) - 1;
-    const song = ["sound1.mp3", "sound2.mp3", "sound3.mp3"][index];
-
-    playback = spawn('mpg123', ["--loop", 2, song]);
+    // const index = (Math.floor(Math.random() * 3) + 1) - 1;
+    // const song = ["sound1.mp3", "sound2.mp3", "sound3.mp3"][index];
+    //
+    // playback = spawn('mpg123', ["--loop", 2, song]);
 
     // For production
-    // playback = spawn('mpg123', ["--loop", 2, MY_SOUND]);
+    playback = spawn('mpg123', ["--loop", 2, MY_SOUND]);
 
     pin.mode('high');
   }
