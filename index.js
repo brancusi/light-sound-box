@@ -94,7 +94,7 @@ function startApp() {
     playback = spawn('mpg123', ["--loop", 2, song]);
 
     // For production
-    playback = spawn('mpg123', ["--loop", 2, MY_SOUND]);
+    // playback = spawn('mpg123', ["--loop", 2, MY_SOUND]);
 
     pin.mode('high');
   }
